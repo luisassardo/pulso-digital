@@ -163,9 +163,9 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/OWNER/pulso-digital.git"
+        "url": "https://github.com/luisassardo/pulso-digital.git"
     },
-    "bugs": "https://github.com/OWNER/pulso-digital/issues",
+    "bugs": "https://github.com/luisassardo/pulso-digital/issues",
     "scripts": {
         "dev": "gulp",
         "build": "gulp build",
