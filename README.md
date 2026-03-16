@@ -49,7 +49,7 @@
 cd /path/to/ghost/content/themes/
 
 # Clone the repository
-git clone https://github.com/OWNER/pulso-digital.git
+git clone https://github.com/luisassardo/pulso-digital.git
 
 # Install dependencies
 cd pulso-digital
