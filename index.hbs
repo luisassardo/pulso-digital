@@ -1,0 +1,9 @@
+{{!< default}}
+{{!-- The tag above means: insert everything in this file into the body of the default.hbs template --}}
+
+{{!-- This is the paginated post index, used for /page/2/, /page/3/, etc. 
+     The homepage uses home.hbs instead --}}
+
+<main class="gh-main">
+    {{> "components/post-list" feed="index" postFeedStyle=@custom.post_feed_style showTitle=true showSidebar=@custom.show_publication_info_sidebar}}
+</main>

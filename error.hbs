@@ -1,0 +1,12 @@
+{{!< default}}
+{{!-- Template for 404 and other error pages --}}
+
+<main class="gh-main">
+    <div class="gh-page gh-canvas">
+        <section class="gh-error">
+            <span class="gh-error-code">{{statusCode}}</span>
+            <p class="gh-error-description">{{message}}</p>
+            <a class="gh-button" href="{{@site.url}}">{{t "Go to the front page →"}}</a>
+        </section>
+    </div>
+</main>

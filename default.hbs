@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="{{@site.locale}}">
+<head>
+
+    {{!-- Basic meta --}}
+    <title>{{meta_title page=(t " (Page %)")}}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {{!-- Preload --}}
+    <link rel="preload" as="style" href="{{asset "built/screen.css"}}">
+    <link rel="preload" as="script" href="{{asset "built/source.js"}}">
+
+    {{!-- Fonts --}}
+    {{> "typography/fonts"}}
+
+    {{!-- Styles --}}
+    <link rel="stylesheet" type="text/css" href="{{asset "built/screen.css"}}">
+
+    {{!-- Dark theme by default --}}
+    <style>
+        :root {
+            --background-color: #08090d
+        }
+    </style>
+
+    <script>
+        document.documentElement.className = 'has-light-text';
+    </script>
+
+    {{ghost_head}}
+
+</head>
+<body class="{{body_class}} has-{{#match @custom.title_font "Elegant serif"}}serif{{else match @custom.title_font "Consistent mono"}}mono{{else}}sans{{/match}}-title has-{{#match @custom.body_font "Elegant serif"}}serif{{else}}sans{{/match}}-body">
+
+<div class="gh-viewport">
+
+    {{> "components/navigation" navigationLayout=@custom.navigation_layout}}
+
+    {{{body}}}
+
+    {{> "components/footer"}}
+
+</div>
+
+{{#is "post, page"}}
+    {{> "lightbox"}}
+{{/is}}
+
+<script src="{{asset "built/source.js"}}"></script>
+
+{{ghost_foot}}
+
+</body>
+</html>

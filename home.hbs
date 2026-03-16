@@ -1,0 +1,142 @@
+{{!< default}}
+
+{{!-- =============================================
+   HOMEPAGE LAYOUT — Pulso Digital
+   Row 1: Hero (latest featured post)
+   Row 2: 3 more featured posts
+   Row 3: Subscribe CTA (non-members only)
+   Row 4: 4 latest posts from "opinión" tag
+   Row 5+: Latest posts (no repeats)
+   ============================================= --}}
+
+<main class="gh-main" role="main">
+
+    {{!-- ROW 1: Hero — latest featured post --}}
+    {{#get "posts" filter="featured:true" include="authors,tags" limit="1"}}
+        {{#foreach posts}}
+            <section class="pd-hero gh-outer">
+                <div class="pd-hero-inner gh-inner">
+                    <a class="pd-hero-link" href="{{url}}">
+                        {{#if feature_image}}
+                            <figure class="pd-hero-image">
+                                <img
+                                    srcset="{{img_url feature_image size="s" format="webp"}} 320w,
+                                            {{img_url feature_image size="m" format="webp"}} 600w,
+                                            {{img_url feature_image size="l" format="webp"}} 960w,
+                                            {{img_url feature_image size="xl" format="webp"}} 1200w,
+                                            {{img_url feature_image size="xxl" format="webp"}} 2000w"
+                                    sizes="(max-width: 1200px) 100vw, 1200px"
+                                    src="{{img_url feature_image size="xl"}}"
+                                    alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                                >
+                            </figure>
+                        {{/if}}
+                        <div class="pd-hero-content">
+                            {{#if primary_tag}}
+                                <span class="pd-hero-tag">{{primary_tag.name}}</span>
+                            {{/if}}
+                            <h2 class="pd-hero-title is-title">{{title}}</h2>
+                            {{#if custom_excerpt}}
+                                <p class="pd-hero-excerpt is-body">{{custom_excerpt}}</p>
+                            {{else if excerpt}}
+                                <p class="pd-hero-excerpt is-body">{{excerpt words="30"}}</p>
+                            {{/if}}
+                            <div class="pd-hero-meta">
+                                {{#foreach authors}}
+                                    {{#if profile_image}}
+                                        <img class="pd-hero-author-img" src="{{img_url profile_image size="xs"}}" alt="{{name}}">
+                                    {{/if}}
+                                {{/foreach}}
+                                <span class="pd-hero-author-name">{{authors autolink="false" separator=", "}}</span>
+                                <span class="pd-meta-sep">&middot;</span>
+                                <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                                {{#if reading_time}}
+                                    <span class="pd-meta-sep">&middot;</span>
+                                    <span>{{reading_time minute=(t "1 min read") minutes=(t "% min read")}}</span>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        {{/foreach}}
+    {{/get}}
+
+    {{!-- ROW 2: Three more featured posts --}}
+    {{#get "posts" filter="featured:true" include="authors,tags" limit="4"}}
+        {{#if posts.length}}
+            <section class="pd-featured-row gh-outer">
+                <div class="pd-featured-row-inner gh-inner">
+                    <div class="pd-row-header">
+                        <h2 class="pd-row-title">{{t "Featured"}}</h2>
+                    </div>
+                    <div class="pd-grid pd-grid--3">
+                        {{#foreach posts from="2"}}
+                            {{> "pd-card"}}
+                        {{/foreach}}
+                    </div>
+                </div>
+            </section>
+        {{/if}}
+    {{/get}}
+
+    {{!-- ROW 3: Subscribe CTA --}}
+    {{#if @site.members_enabled}}
+        {{#unless @member}}
+            <section class="pd-subscribe gh-outer">
+                <div class="pd-subscribe-inner gh-inner">
+                    <div class="pd-subscribe-content">
+                        <h2 class="pd-subscribe-title is-title">
+                            {{#if @custom.signup_heading}}{{@custom.signup_heading}}{{else}}{{t "Subscribe to {sitetitle}" sitetitle=@site.title}}{{/if}}
+                        </h2>
+                        <p class="pd-subscribe-desc is-body">
+                            {{#if @custom.signup_subheading}}{{@custom.signup_subheading}}{{else}}{{@site.description}}{{/if}}
+                        </p>
+                    </div>
+                    {{> "email-subscription" email_field_id="home-cta-email"}}
+                </div>
+            </section>
+        {{/unless}}
+    {{/if}}
+
+    {{!-- ROW 4: Four latest posts from "opinión" tag --}}
+    {{#get "posts" filter="tag:opinion" include="authors,tags" limit="4"}}
+        {{#if posts.length}}
+            <section class="pd-opinion-row gh-outer">
+                <div class="pd-opinion-row-inner gh-inner">
+                    <div class="pd-row-header">
+                        <h2 class="pd-row-title">Opinión</h2>
+                        <a class="pd-row-link" href="{{@site.url}}/tag/opinion/">{{t "See all"}} {{> "icons/arrow"}}</a>
+                    </div>
+                    <div class="pd-grid pd-grid--4">
+                        {{#foreach posts}}
+                            {{> "pd-card"}}
+                        {{/foreach}}
+                    </div>
+                </div>
+            </section>
+        {{/if}}
+    {{/get}}
+
+    {{!-- ROW 5+: Latest posts (excluding featured and opinión) --}}
+    {{#get "posts" filter="featured:false+tag:-[opinion]" include="authors,tags" limit="12"}}
+        {{#if posts.length}}
+            <section class="pd-latest-row gh-outer">
+                <div class="pd-latest-row-inner gh-inner">
+                    <div class="pd-row-header">
+                        <h2 class="pd-row-title">{{t "Latest"}}</h2>
+                        {{#match pagination.pages ">" 1}}
+                            <a class="pd-row-link" href="{{@site.url}}/page/2/">{{t "See all"}} {{> "icons/arrow"}}</a>
+                        {{/match}}
+                    </div>
+                    <div class="pd-grid pd-grid--4">
+                        {{#foreach posts}}
+                            {{> "pd-card"}}
+                        {{/foreach}}
+                    </div>
+                </div>
+            </section>
+        {{/if}}
+    {{/get}}
+
+</main>

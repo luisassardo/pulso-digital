@@ -1,0 +1,42 @@
+<article class="pd-card {{post_class}}">
+    <a class="pd-card-link" href="{{url}}">
+        {{#if feature_image}}
+            <figure class="pd-card-image">
+                <img
+                    srcset="{{img_url feature_image size="xs" format="webp"}} 160w,
+                            {{img_url feature_image size="s" format="webp"}} 320w,
+                            {{img_url feature_image size="m" format="webp"}} 600w,
+                            {{img_url feature_image size="l" format="webp"}} 960w"
+                    sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1024px) calc(50vw - 48px), 300px"
+                    src="{{img_url feature_image size="m"}}"
+                    alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                    loading="lazy"
+                >
+            </figure>
+        {{else}}
+            <figure class="pd-card-image pd-card-image--empty">
+                <span class="pd-card-image-placeholder">◈</span>
+            </figure>
+        {{/if}}
+        <div class="pd-card-body">
+            {{#if primary_tag}}
+                <span class="pd-card-tag">{{primary_tag.name}}</span>
+            {{/if}}
+            <h3 class="pd-card-title is-title">{{title}}</h3>
+            <footer class="pd-card-meta">
+                {{#foreach authors limit="1"}}
+                    {{#if profile_image}}
+                        <img class="pd-card-author-img" src="{{img_url profile_image size="xs"}}" alt="{{name}}">
+                    {{/if}}
+                    <span class="pd-card-author-name">{{name}}</span>
+                {{/foreach}}
+                <span class="pd-meta-sep">&middot;</span>
+                <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                {{#if reading_time}}
+                    <span class="pd-meta-sep">&middot;</span>
+                    <span>{{reading_time minute=(t "1 min read") minutes=(t "% min read")}}</span>
+                {{/if}}
+            </footer>
+        </div>
+    </a>
+</article>
