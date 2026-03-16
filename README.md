@@ -193,6 +193,7 @@ Contributions are welcome! Please follow these steps:
 ## Credits
 
 - Based on [Source](https://github.com/TryGhost/Source) by Ghost Foundation
+- Ideas and layout by [Luis Assardo](https://github.com/luisassardo)
 - Typography: [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) by Tokotype
 - Lightbox: [PhotoSwipe](https://photoswipe.com/)
 
